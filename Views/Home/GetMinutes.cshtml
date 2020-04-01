@@ -1,0 +1,45 @@
+@model List<Minutes>
+@{
+    //ViewData["Title"] = "Список смартфонов";
+    Layout = null;
+}
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <title>Значения минут</title>
+</head>
+<body>
+    <h3>Минуты</h3>
+    <table>
+        <tr>
+            <td>Id</td>
+            <td></td><td></td><td></td>
+            <td>Дата</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Влажность</td>
+            <td></td>
+            <td>Температура</td>
+        </tr>
+        @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.Id</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@item.Date</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@item.Humidity</td>
+                <td></td>
+                <td>@item.Temperature</td>
+                
+            </tr>
+        }
+    </table>
+</body>
+</html>

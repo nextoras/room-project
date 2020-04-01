@@ -30,3 +30,7 @@ C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\server.Views.pdb
 C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\server.dll
 C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\server.pdb
 C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\server.csproj.CopyComplete
+C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\Razor\Views\Home\GetSeconds.g.cshtml.cs
+C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\Razor\Views\Home\GetDays.g.cshtml.cs
+C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\Razor\Views\Home\GetHours.g.cshtml.cs
+C:\Users\Admin\Documents\Arduino\server\obj\Debug\netcoreapp2.1\Razor\Views\Home\GetMinutes.g.cshtml.cs
