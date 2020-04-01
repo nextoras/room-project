@@ -16,9 +16,27 @@ namespace server.Controllers
         //     _db = db;
         // }
         //public weatherContext _db = new weatherContext();
-        
+
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(string value)
+        {
+            if (value != null)
+            {
+                weatherContext db = new weatherContext();
+                var status = db.DeviceStatus.FirstOrDefault();
+                if (status != null) 
+                {
+                    if (value == "0")  status.Fan = !status.Fan;
+                    if (value == "1") status.HeatingFan = !status.HeatingFan;
+                }
+                db.SaveChanges();
+                return View();
+            }
             return View();
         }
 
@@ -31,7 +49,7 @@ namespace server.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Разработчик всегда на связи!";
 
             return View();
         }
@@ -42,7 +60,7 @@ namespace server.Controllers
             var seconds = db.Seconds.ToList();
             return View(seconds);
         }
-        
+
         public IActionResult GetMinutes()
         {
             weatherContext db = new weatherContext();
@@ -81,9 +99,9 @@ namespace server.Controllers
             {
                 weatherContext _db = new weatherContext();
                 var deviceStatus = _db.DeviceStatus.FirstOrDefault();
-                if (deviceStatus != null) 
+                if (deviceStatus != null)
                 {
-                    if (status == 1) 
+                    if (status == 1)
                     {
                         deviceStatus.Fan = true;
                         await _db.SaveChangesAsync();
@@ -103,7 +121,7 @@ namespace server.Controllers
             {
                 throw;
             }
-            
+
         }
     }
 }

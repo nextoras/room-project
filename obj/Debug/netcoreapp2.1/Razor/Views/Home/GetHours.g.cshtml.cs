@@ -61,7 +61,7 @@ using server.Models;
             WriteLiteral("<!DOCTYPE html>\r\n \r\n<html>\r\n");
             EndContext();
             BeginContext(123, 50, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c11fbce2799344b6a26e9415efd1e829", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d7f543840c249a493a556f1b10d5795", async() => {
                 BeginContext(129, 37, true);
                 WriteLiteral("\r\n    <title>Значения часов</title>\r\n");
                 EndContext();
@@ -81,7 +81,7 @@ using server.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(175, 806, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a50bdaf408134e32bf782b78245949f6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ead439bffada499eb9037da815d0d24e", async() => {
                 BeginContext(181, 314, true);
                 WriteLiteral(@"
     <h3>Часы</h3>
