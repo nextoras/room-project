@@ -15,7 +15,6 @@ namespace server
             : base(options)
         {
         }
-
         public virtual DbSet<Seconds> Seconds { get; set; }
         public virtual DbSet<Minutes> Minutes { get; set; }
         public virtual DbSet<Hours> Hours { get; set; }
@@ -23,6 +22,13 @@ namespace server
         public virtual DbSet<Weeks> Weeks { get; set; }
         public virtual DbSet<Mounths> Mounths { get; set; }
         public virtual DbSet<DeviceStatus> DeviceStatus { get; set; }
+        public virtual DbSet<Devices> Devices { get; set; }
+        public virtual DbSet<Meterings> Meterings { get; set; }
+        public virtual DbSet<MeteringTypes> MeteringTypes { get; set; }
+        public virtual DbSet<Sensors> Sensors { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<UserSensors> UserSensors { get; set; }
+        public virtual DbSet<UserDevices> UserDevices { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -50,6 +56,10 @@ namespace server
 
                 entity.Property(e => e.Temperature).HasColumnName("temperature");
             });
+            modelBuilder.Entity<UserDevices>()
+            .HasKey(o => new { o.UserId, o.DeviceId });
+            modelBuilder.Entity<UserSensors>()
+            .HasKey(o => new { o.UserId, o.SensorId });
         }
     }
 }

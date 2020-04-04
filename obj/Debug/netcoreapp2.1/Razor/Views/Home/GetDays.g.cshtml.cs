@@ -61,7 +61,7 @@ using server.Models;
             WriteLiteral("<!DOCTYPE html>\r\n \r\n<html>\r\n");
             EndContext();
             BeginContext(122, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7d808679c74e40bebc05a7a2bce6cde3", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d6d1030e57e40d99dbc6e0a7a44b73c", async() => {
                 BeginContext(128, 36, true);
                 WriteLiteral("\r\n    <title>Значения дней</title>\r\n");
                 EndContext();
@@ -81,7 +81,7 @@ using server.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(173, 805, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8a44d29a6dd7417888d915b7f817cde7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fabeab843ff647d1b813cff77d8e521e", async() => {
                 BeginContext(179, 313, true);
                 WriteLiteral(@"
     <h3>Дни</h3>

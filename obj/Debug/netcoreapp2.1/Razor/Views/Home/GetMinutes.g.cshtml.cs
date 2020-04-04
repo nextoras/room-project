@@ -61,7 +61,7 @@ using server.Models;
             WriteLiteral("<!DOCTYPE html>\r\n \r\n<html>\r\n");
             EndContext();
             BeginContext(125, 50, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "82e4b1fd2547461b95be859df41da9c5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "48b8cdcd5dcb451f836aab12463eb72a", async() => {
                 BeginContext(131, 37, true);
                 WriteLiteral("\r\n    <title>Значения минут</title>\r\n");
                 EndContext();
@@ -81,7 +81,7 @@ using server.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(177, 808, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0c789d93c4b9409ea08d39d71b8184f6", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fafe6b87f83442c992293a49044dfe59", async() => {
                 BeginContext(183, 316, true);
                 WriteLiteral(@"
     <h3>Минуты</h3>

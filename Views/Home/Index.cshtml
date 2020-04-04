@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Main Page";
+﻿@model MainPageDTO
+@{
+    ViewBag.Title = "Index";
 }
 <div>
     <style>
@@ -42,74 +43,45 @@
                         <th>Состояние</th>
                         <th></th>
                     </tr>
-                    <tr>
-                        <td>Вентилятор</td>
-                        <td>ON</td>
-                        <td>
-                            <form method="post">
-                                <input type="hidden" value="0" name="value" />
-                                <input type="submit" value="Изменить" />
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Обогревающий Вентилятор</td>
-                        <td>ON</td>
-                        <td>
-                            <form method="post">
-                                <input type="hidden" value="1" name="value" />
-                                <input type="submit" value="Изменить" />
-                            </form>
-                        </td>
-                    </tr>
+                    @foreach (var device in Model.devices)
+                    {
+                        <tr>
+                            <td>@device.Name</td>
+                            <td>@device.Status</td>
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" value=@device.Status name="status" />
+                                    <input type="hidden" value=@device.Id name="id" />
+                                    <input type="submit" value="Изменить" />
+                                </form>
+                            </td>
+                        </tr>
+                    }
                     </table>
             </div>
             <div class="col-md-6">
-            <h2>Показания</h2>
+            <h2>Средние значения</h2>
             <table cellpadding="15" cellspacing="50">
                    
                     <tr>
-                        <th>Период</th>
-                        <th>Температура</th>
-                        <th>Влажность</th>
-                        <th>График</th>
+                        <th></th>
+                        <th>Сейчас</th>
+                        <th>За минуту</th>
+                        <th>За час</th>
+                        <th>За день</th>
+                        <th>За неделю</th>
+                        <th>За месяц</th>
                     </tr>
-                    <tr>
-                        <td>Сейчас</td>
-                        <td>22</td>
-                        <td>30</td>
-                        <td>Тут будет ссылка на график</td>
-                    </tr>
-                    <tr>
-                        <td>По минутам</td>
-                        <td>22</td>
-                        <td>30</td>
-                        <td>Тут будет ссылка на график</td>
-                    </tr>
-                    <tr>
-                        <td>По часам</td>
-                        <td>22</td>
-                        <td>30</td>
-                        <td>Тут будет ссылка на график</td>
-                    </tr>
-                    <tr>
-                        <td>По дням</td>
-                        <td>22</td>
-                        <td>30</td>
-                        <td>Тут будет ссылка на график</td>
-                    </tr>
-                    <tr>
-                        <td>По неделям</td>
-                        <td>22</td>
-                        <td>30</td>
-                        <td>Тут будет ссылка на график</td>
-                    </tr>
-                    <tr>
-                        <td>По месяцам</td>
-                        <td>22</td>
-                        <td>30</td>
-                        <td>Тут будет ссылка на график</td>
-                    </tr>
+                    @foreach (var sensor in Model.sensors)
+                    {
+                        <tr>
+                            <td>@sensor.Name</td>
+                            @foreach (var avereageValue in sensor.AvereageValues)
+                            {
+                                <td>@avereageValue.Value</td>
+                            }                            
+                        </tr>
+                    }                    
                     </table>
             </div>
         </div>

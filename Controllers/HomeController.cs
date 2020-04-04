@@ -19,25 +19,108 @@ namespace server.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            weatherContext db = new weatherContext();
+            var userId = 0;
+
+            MainPageDTO mainPageDTO = new MainPageDTO();
+            List<MeteringDTO> meteringDTOs = new List<MeteringDTO>();
+            List<SensorDTO> sensorDTOs = new List<SensorDTO>();
+            List<DeviceDTO> deviceDTOs = new List<DeviceDTO>();
+
+            var userDevices = db.UserDevices.Where(e => e.UserId == userId).ToList();
+            List<Devices> devices = new List<Devices>();
+            foreach (var userDevice in userDevices)
+            {
+                var device = db.Devices.Where(d => d.Id == userDevice.DeviceId).FirstOrDefault();
+                if (device != null)
+                {
+                    DeviceDTO deviceDTO = new DeviceDTO()
+                    {
+                        Id = device.Id,
+                        Name = device.Name,
+                        Status = device.Status
+                    };
+                    deviceDTOs.Add(deviceDTO);
+                }
+            }
+
+            var userSensors = db.UserSensors.Where(e => e.UserId == userId).ToList();
+            List<Sensors> sensors = new List<Sensors>();
+            foreach (var userSensor in userSensors)
+            {
+                var sensor = db.Sensors.Where(d => d.Id == userSensor.SensorId).FirstOrDefault();
+                if (sensor != null)
+                {
+                    var meteringTypes = db.MeteringTypes.ToList();
+                    List<AvereageValueDTO> avereageValues = new List<AvereageValueDTO>();
+
+                    foreach (var meteringType in meteringTypes)
+                    {
+                        
+                        var metering = db.Meterings.Where(m => m.MeteringTypeId == meteringType.Id && m.SensorId == sensor.Id)
+                            .OrderByDescending(m => m.Date)
+                            .FirstOrDefault();
+                        if (metering != null)   
+                        {
+                            AvereageValueDTO avereageValueDTO = new AvereageValueDTO()
+                            {
+                                Value = metering.Value
+                            };
+                            avereageValues.Add(avereageValueDTO);
+                        }
+                    }
+                    SensorDTO sensorDTO = new SensorDTO()
+                    {
+                        Id = sensor.Id,
+                        Name = sensor.Name,
+                        AvereageValues = avereageValues
+                    };
+                    sensorDTOs.Add(sensorDTO);
+                }
+            }
+
+            var userMeterings = db.Meterings
+            .Where(m => m.UserId == userId)
+            .ToList();
+
+            foreach (var userMetering in userMeterings)
+            {
+                MeteringDTO meteringDTO = new MeteringDTO()
+                {
+                    Id = userMetering.Id,
+                    SensorId = userMetering.SensorId,
+                    Date = userMetering.Date,
+                    Value = userMetering.Value,
+                    MeteringTypeId = userMetering.MeteringTypeId,
+                    UserId = userMetering.Id
+                };
+                meteringDTOs.Add(meteringDTO);
+            }
+            mainPageDTO.devices = deviceDTOs;
+            mainPageDTO.sensors = sensorDTOs;
+            mainPageDTO.meterings = meteringDTOs;
+
+            return View(mainPageDTO);
         }
 
         [HttpPost]
-        public IActionResult Index(string value)
+        public IActionResult Index(DeviceDTO dto)
         {
-            if (value != null)
+            if (dto != null)
             {
+
                 weatherContext db = new weatherContext();
-                var status = db.DeviceStatus.FirstOrDefault();
-                if (status != null) 
+                var device = db.Devices.Where(d => d.Id == dto.Id).FirstOrDefault();
+
+                if (device != null)
                 {
-                    if (value == "0")  status.Fan = !status.Fan;
-                    if (value == "1") status.HeatingFan = !status.HeatingFan;
+                    device.Status = !device.Status;
+                    db.Devices.Update(device);
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
-                return View();
+                return RedirectToAction("Index");
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         public IActionResult About()
