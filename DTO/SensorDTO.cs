@@ -10,7 +10,7 @@ namespace server
         public List<AvereageValueDTO> AvereageValues { get; set;}
     }
 
-    public class AvereageValueDTO
+    public class AvereageValueDTO    
     {
         public double Value { get; set; }
     }
