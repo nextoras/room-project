@@ -12,6 +12,6 @@ namespace server
         public DateTime Date { get; set; }
         public double Value { get; set; }
         public int MeteringTypeId { get; set; }
-        public int UserId { get; set; }
+        public int UserId { get; set; }    
     }
 }
