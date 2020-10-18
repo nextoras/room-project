@@ -14,7 +14,7 @@ namespace server
         {
             devices = new List<DeviceDTO>();
             meterings = new List<MeteringDTO>();
-            sensors = new List<SensorDTO>();
+            sensors = new List<SensorDTO>();   
         }
     }
 }
