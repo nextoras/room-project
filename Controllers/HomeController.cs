@@ -144,7 +144,7 @@ namespace server.Controllers
             return View(seconds);
         }
 
-        public IActionResult GetMinutes()
+        public IActionResult GetMinutes() 
         {
             weatherContext db = new weatherContext();
             var minutes = db.Minutes.ToList();

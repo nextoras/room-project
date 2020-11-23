@@ -33,7 +33,7 @@ namespace server
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddDbContext<weatherContext>(options =>
-                        options.UseNpgsql(Configuration.GetConnectionString("Host=213.226.112.163;Database=weather;Username=postgres;Password=ser241199")));
+                        options.UseNpgsql(Configuration.GetConnectionString("Host=194.87.146.250;Database=weather;Username=postgres;Password=ser241199")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
