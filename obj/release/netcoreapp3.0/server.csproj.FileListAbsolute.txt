@@ -12,21 +12,8 @@ C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp
 C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.Caching.Abstractions.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.Caching.Memory.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.Logging.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.Logging.Abstractions.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.Options.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Microsoft.Extensions.Primitives.dll
 C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Npgsql.dll
 C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\System.Collections.Immutable.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\System.ComponentModel.Annotations.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\System.Diagnostics.DiagnosticSource.dll
-C:\Users\drako\source\repos\GIT пример\room-project\bin\release\netcoreapp3.0\System.Threading.Channels.dll
 C:\Users\drako\source\repos\GIT пример\room-project\obj\release\netcoreapp3.0\server.csprojAssemblyReference.cache
 C:\Users\drako\source\repos\GIT пример\room-project\obj\release\netcoreapp3.0\server.AssemblyInfoInputs.cache
 C:\Users\drako\source\repos\GIT пример\room-project\obj\release\netcoreapp3.0\server.AssemblyInfo.cs
@@ -60,3 +47,4 @@ C:\Users\drako\source\repos\GIT пример\room-project\obj\release\netcoreapp
 C:\Users\drako\source\repos\GIT пример\room-project\obj\release\netcoreapp3.0\server.dll
 C:\Users\drako\source\repos\GIT пример\room-project\obj\release\netcoreapp3.0\server.pdb
 C:\Users\drako\source\repos\GIT пример\room-project\obj\release\netcoreapp3.0\server.genruntimeconfig.cache
+C:\Users\drako\source\repos\GIT пример\room-project\bin\Release\netcoreapp3.0\Microsoft.EntityFrameworkCore.Design.dll

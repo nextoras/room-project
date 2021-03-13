@@ -10,13 +10,6 @@ namespace server.Controllers
 {
     public class HomeController : Controller
     {
-        // private readonly weatherContext _db;
-        // HomeController(weatherContext db)
-        // {
-        //     _db = db;
-        // }
-        //public weatherContext _db = new weatherContext();
-
         public IActionResult Index()
         {
             weatherContext db = new weatherContext();

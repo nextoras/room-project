@@ -102,6 +102,63 @@ namespace server.Controllers
             
         }
 
+        [HttpGet("/CreateData/{t}/{h}")]
+        public async Task<String> CreateData(double t, double h)
+        {
+            weatherContext _db = new weatherContext();
 
+            var row_id = _db.Meterings
+                .ToList().Count() + 1;
+                
+
+            Meterings metering1 = new Meterings()
+                {
+                    Id = row_id,
+                    SensorId = 0,
+                    Date = DateTime.UtcNow,
+                    Value = t,
+                    MeteringTypeId = 0,
+                    UserId = 0
+                };
+
+            Meterings metering2 = new Meterings()
+                {
+                    Id = row_id + 1,
+                    SensorId = 1,
+                    Date = DateTime.UtcNow,
+                    Value = h,
+                    MeteringTypeId = 0,
+                    UserId = 0
+                };
+
+            _db.Meterings.Add(metering1);
+            _db.Meterings.Add(metering2);
+            _db.SaveChanges();
+            return "sc";
+        }
+
+        [HttpGet("/GetDataArduino")]
+        public async Task<String> GetData()
+        {
+            weatherContext _db = new weatherContext();
+
+            // var meterings = _db.Meterings
+            //     .ToList().OrderByDescending(x => x.Id);
+            
+            // var check = meterings.FirstOrDefault().Value /*+ "/" + meterings.Skip(1).FirstOrDefault().Value*/;
+            // String result = "false";
+            // if (check > 10) result = "true";
+
+            var deviceStatus = _db.Devices.FirstOrDefault();
+
+            if (deviceStatus.Status == true)
+            {
+                return "true";
+            }
+            else 
+            {
+                return "false";
+            }
+        }
     }
 }

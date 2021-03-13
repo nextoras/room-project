@@ -44,7 +44,7 @@ namespace server
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                //app.UseHsts();
             }
     
             
