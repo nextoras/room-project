@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\drako\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\drako\\.nuget\\packages"
-    ]
-  }
-}
