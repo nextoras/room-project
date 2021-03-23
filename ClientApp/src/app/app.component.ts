@@ -18,44 +18,102 @@ class Item {
 
 @Component({
     selector: 'purchase-app',
-    template: `<div class="page-header">
-        <h1> Список покупок </h1>
-    </div>
-    <div class="panel">
-        <div class="form-inline">
-            <div class="form-group">
-                <div class="col-md-8">
-                    <input class="form-control" [(ngModel)]="text" placeholder = "Название" />
-                </div>
+    template: `<div>
+    <style>
+   h1 {
+    background: #ffffff;
+    padding: 40px;
+    color: #000000;
+   }
+    h2 {
+    background: #ffffff;
+    padding: 20px;
+    color: #000000;
+   }
+   p {
+    background: #ffffff;
+    padding: 0px;
+   }
+   table {
+    border: 4px double #333; /* Рамка вокруг таблицы */ 
+    border-collapse: separate; /* Способ отображения границы */ 
+    width: 100%; /* Ширина таблицы */ 
+    border-spacing: 7px 11px; /* Расстояние между ячейками */ 
+   }
+   td {
+    padding: 5px; /* Поля вокруг текста */ 
+    border: 1px solid #f52a2f; /* Граница вокруг ячеек */ 
+   }
+  </style>
+    <div >
+        <h1 style=" margin: 0 auto; text-align: center; background:  #f52a2f;">Панель управления</h1>
+    
+        <div class="row">
+            <div class="col-md-6">
+            <h2>Устройства</h2>
+                
+                   <table cellpadding="15" cellspacing="50">
+                   
+                    <tr>
+                        <th>Наименование</th>
+                        <th>Состояние</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                    <td>Вентилятор</td>
+                        <td>True</td>
+                        <input type="submit" value="Изменить" />
+                    </tr> 
+                    <tr>
+                    <td>Настольная лампа</td>
+                        <td>False</td>
+                        <input type="submit" value="Изменить" />
+                    </tr> 
+                    <tr>
+                    <td>Кондиционер</td>
+                        <td>True</td>
+                        <input type="submit" value="Изменить" />
+                    </tr>    
+                    </table>
             </div>
-            <div class="form-group">
-                <div class="col-md-6">
-                    <input type="number" class="form-control" [(ngModel)]="price" placeholder="Цена" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <button class="btn btn-default" (click)="addItem(text, price)">Добавить</button>
-                </div>
+            <div class="col-md-6">
+            <h2>Средние значения</h2>
+            <table cellpadding="15" cellspacing="50">
+                   
+                    <tr>
+                        <th></th>
+                        <th>Сейчас</th>
+                        <th>За минуту</th>
+                        <th>За час</th>
+                        <th>За день</th>
+                        <th>За неделю</th>
+                        <th>За месяц</th>
+                    </tr>
+                    <tr>
+                        <td>Термометр</td>
+                        <td>24</td>
+                        <td>25</td>
+                        <td>24</td>
+                        <td>23</td>
+                        <td>24</td>
+                        <td>23</td>
+                    </tr>    
+                    <tr>
+                        <td>Влажность</td>
+                        <td>80</td>
+                        <td>78</td>
+                        <td>82</td>
+                        <td>81</td>
+                        <td>80</td>
+                        <td>82</td>
+                    </tr>            
+                    </table>
             </div>
         </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Предмет</th>
-                    <th>Цена</th>
-                    <th>Куплено</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of items">
-                    <td>{{item.purchase}}</td>
-                    <td>{{item.price}}</td>
-                    <td><input type="checkbox" [(ngModel)]="item.done" /></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>`,
+    </div>
+
+
+</div>`,
     providers: [HttpService]
 })
 export class AppComponent implements OnInit {
