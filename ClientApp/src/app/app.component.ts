@@ -72,7 +72,7 @@ class Item {
                     <tr>
                     <td>Кондиционер</td>
                         <td>True</td>
-                        <input type="submit" value="Изменить" />
+                        <button class="btn btn-success btn-block" (click)="showNotification()">On / Off</button>
                     </tr>    
                     </table>
             </div>
@@ -141,6 +141,7 @@ export class AppComponent implements OnInit {
             return;
         this.items.push(new Item(text, price));
     }
-
-
+    // showNotification(){
+    //     var a = this.httpService.getData();
+    // }
 }

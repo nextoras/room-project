@@ -7,6 +7,6 @@ export class HttpService {
     constructor(private http: HttpClient) { }
 
     getData() {
-        return this.http.get('assets/users.json')
+        return this.http.get("http://localhost:5002/getSeconds")
     }
 }

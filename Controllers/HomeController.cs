@@ -93,7 +93,7 @@ namespace server.Controllers
             mainPageDTO.sensors = sensorDTOs;
             mainPageDTO.meterings = meteringDTOs;
 
-            return View(mainPageDTO);
+            return Ok(mainPageDTO);
         }
 
         [HttpPost]

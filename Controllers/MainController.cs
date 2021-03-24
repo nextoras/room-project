@@ -22,14 +22,14 @@ namespace server.Controllers
         [HttpGet("/getSeconds")]
         public async Task<string> GetSeconds()
         {
-            weatherContext _db = new weatherContext();
-            var seconds = _db.Seconds.ToList();
-            string result = "";
-            foreach (var second in seconds)
-            {
-                result = result + "id = " + second.Id + "  Date = " + second.Date + "   T* = " + second.Temperature + "    H = " + second.Humidity + '\n';
-            }
-            return result;
+            // weatherContext _db = new weatherContext();
+            // var seconds = _db.Seconds.ToList();
+            // string result = "";
+            // foreach (var second in seconds)
+            // {
+            //     result = result + "id = " + second.Id + "  Date = " + second.Date + "   T* = " + second.Temperature + "    H = " + second.Humidity + '\n';
+            // }
+            return "eqeqwe";
         }
 
         [HttpGet("/getMinutes")]
@@ -94,6 +94,22 @@ namespace server.Controllers
                     await _db.SaveChangesAsync();
                 }
                 return "Получен невалидный аргумент";
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+            
+        }
+
+        [HttpGet("/ActualInfo")]
+        public async Task<double> ActualInfo()
+        {
+            try
+            {
+                weatherContext _db = new weatherContext();
+                var lastMetering = _db.Meterings.FirstOrDefault();
+                return lastMetering.Value;
             }
             catch (System.Exception)
             {
