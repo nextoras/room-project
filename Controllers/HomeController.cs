@@ -13,29 +13,29 @@ namespace server.Controllers
         public IActionResult Index()
         {
             weatherContext db = new weatherContext();
-            var userId = 0;
+            var userId = "asd";
 
             MainPageDTO mainPageDTO = new MainPageDTO();
             List<MeteringDTO> meteringDTOs = new List<MeteringDTO>();
             List<SensorDTO> sensorDTOs = new List<SensorDTO>();
             List<DeviceDTO> deviceDTOs = new List<DeviceDTO>();
 
-            var userDevices = db.UserDevices.Where(e => e.UserId == userId).ToList();
+            //var userDevices = db.UserDevices.FirstOrDefault();
             List<Devices> devices = new List<Devices>();
-            foreach (var userDevice in userDevices)
-            {
-                var device = db.Devices.Where(d => d.Id == userDevice.DeviceId).FirstOrDefault();
-                if (device != null)
+            // foreach (var userDevice in userDevices)
+            // {
+            //     var device = db.Devices.Where(d => d.Id == userDevice.DeviceId).FirstOrDefault();
+                if (true /*userDevices != null*/)
                 {
                     DeviceDTO deviceDTO = new DeviceDTO()
                     {
-                        Id = device.Id,
-                        Name = device.Name,
-                        Status = device.Status
+                        Id = 1,//userDevices.Id,
+                        Name = "asd",//userDevices.Name,
+                        Status = true,// userDevices.Status
                     };
                     deviceDTOs.Add(deviceDTO);
                 }
-            }
+            // }
 
             var userSensors = db.UserSensors.Where(e => e.UserId == userId).ToList();
             List<Sensors> sensors = new List<Sensors>();
@@ -84,8 +84,8 @@ namespace server.Controllers
                     SensorId = userMetering.SensorId,
                     Date = userMetering.Date,
                     Value = userMetering.Value,
-                    MeteringTypeId = userMetering.MeteringTypeId,
-                    UserId = userMetering.Id
+                    MeteringTypeId = userMetering.MeteringTypeId
+                    //UserId = userMetering.Id
                 };
                 meteringDTOs.Add(meteringDTO);
             }

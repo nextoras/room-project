@@ -1,10 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
+using server.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using server.Enteties;
 namespace server
 {
-    public partial class weatherContext : DbContext
+    public partial class weatherContext : IdentityDbContext<User>
     {
         public weatherContext()
         {
@@ -41,6 +43,7 @@ namespace server
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Seconds>(entity =>
             {
                 entity.ToTable("seconds");

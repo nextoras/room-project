@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
 using server;
+using server.Enteties;
 
 namespace server.Controllers
 {
@@ -134,7 +135,7 @@ namespace server.Controllers
                     Date = DateTime.UtcNow,
                     Value = t,
                     MeteringTypeId = 0,
-                    UserId = 0
+                    UserId = "0"
                 };
 
             Meterings metering2 = new Meterings()
@@ -144,11 +145,11 @@ namespace server.Controllers
                     Date = DateTime.UtcNow,
                     Value = h,
                     MeteringTypeId = 0,
-                    UserId = 0
+                    UserId = "0"
                 };
 
-            _db.Meterings.Add(metering1);
-            _db.Meterings.Add(metering2);
+            // _db.Meterings.Add(metering1);
+            // _db.Meterings.Add(metering2);
             _db.SaveChanges();
             return "sc";
         }

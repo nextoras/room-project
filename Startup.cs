@@ -7,6 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using server.Enteties;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace server
 {
@@ -31,6 +37,9 @@ namespace server
                                   builder.WithOrigins("http://localhost:51114",
                                                       "http://localhost:4200");
                               });
+
+            services.AddIdentity<Users, IdentityRole>()
+                .AddEntityFrameworkStores<weatherContext>();
         });
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -40,7 +49,7 @@ namespace server
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddDbContext<weatherContext>(options =>
-                        options.UseNpgsql(Configuration.GetConnectionString("Host=localhost;Database=weather;Username=postgres;Password=ser241199")));
+                        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRazorPages();
         }
@@ -62,6 +71,9 @@ namespace server
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();    // подключение аутентификации
+            app.UseAuthorization();
+            
             app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
