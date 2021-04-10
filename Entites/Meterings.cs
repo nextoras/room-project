@@ -17,9 +17,7 @@ namespace server.Enteties
         public int MeteringTypeId { get; set; }
         [ForeignKey("MeteringTypeId")]
         public virtual MeteringTypes MeteringType { get; set; }
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual Users User { get; set; }
+
 
         public override string ToString()
         {

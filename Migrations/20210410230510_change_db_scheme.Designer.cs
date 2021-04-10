@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using server;
@@ -9,9 +10,10 @@ using server;
 namespace server.Migrations
 {
     [DbContext(typeof(weatherContext))]
-    partial class weatherContextModelSnapshot : ModelSnapshot
+    [Migration("20210410230510_change_db_scheme")]
+    partial class change_db_scheme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -364,6 +366,29 @@ namespace server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MeteringTypes");
+                });
+
+            modelBuilder.Entity("server.Seconds", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnName("id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnName("date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double?>("Humidity")
+                        .HasColumnName("humidity")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Temperature")
+                        .HasColumnName("temperature")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("seconds");
                 });
 
             modelBuilder.Entity("server.Sensors", b =>

@@ -14,7 +14,7 @@ namespace server
     {
         public static void Main(string[] args)
         {
-            weatherContext db = new weatherContext();
+            //weatherContext db = new weatherContext();
             try
             {
                 

@@ -4,117 +4,122 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
-
+using Microsoft.Extensions.Configuration;
 
 namespace server.Controllers
 {
     public class HomeController : Controller
     {
+        public IConfiguration Configuration { get; }
+        public HomeController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         public IActionResult Index()
         {
-            weatherContext db = new weatherContext();
-            var userId = "asd";
+            // weatherContext db = new weatherContext(Configuration);
+            // var userId = "asd";
 
-            MainPageDTO mainPageDTO = new MainPageDTO();
-            List<MeteringDTO> meteringDTOs = new List<MeteringDTO>();
-            List<SensorDTO> sensorDTOs = new List<SensorDTO>();
-            List<DeviceDTO> deviceDTOs = new List<DeviceDTO>();
+            // MainPageDTO mainPageDTO = new MainPageDTO();
+            // List<MeteringDTO> meteringDTOs = new List<MeteringDTO>();
+            // List<SensorDTO> sensorDTOs = new List<SensorDTO>();
+            // List<DeviceDTO> deviceDTOs = new List<DeviceDTO>();
 
-            //var userDevices = db.UserDevices.FirstOrDefault();
-            List<Devices> devices = new List<Devices>();
-            // foreach (var userDevice in userDevices)
+            // //var userDevices = db.UserDevices.FirstOrDefault();
+            // List<Devices> devices = new List<Devices>();
+            // // foreach (var userDevice in userDevices)
+            // // {
+            // //     var device = db.Devices.Where(d => d.Id == userDevice.DeviceId).FirstOrDefault();
+            //     if (true /*userDevices != null*/)
+            //     {
+            //         DeviceDTO deviceDTO = new DeviceDTO()
+            //         {
+            //             Id = 1,//userDevices.Id,
+            //             Name = "asd",//userDevices.Name,
+            //             Status = true,// userDevices.Status
+            //         };
+            //         deviceDTOs.Add(deviceDTO);
+            //     }
+            // // }
+
+            // var userSensors = db.UserSensors.Where(e => e.UserId == userId).ToList();
+            // List<Sensors> sensors = new List<Sensors>();
+            // foreach (var userSensor in userSensors)
             // {
-            //     var device = db.Devices.Where(d => d.Id == userDevice.DeviceId).FirstOrDefault();
-                if (true /*userDevices != null*/)
-                {
-                    DeviceDTO deviceDTO = new DeviceDTO()
-                    {
-                        Id = 1,//userDevices.Id,
-                        Name = "asd",//userDevices.Name,
-                        Status = true,// userDevices.Status
-                    };
-                    deviceDTOs.Add(deviceDTO);
-                }
+            //     var sensor = db.Sensors.Where(d => d.Id == userSensor.SensorId).FirstOrDefault();
+            //     if (sensor != null)
+            //     {
+            //         var meteringTypes = db.MeteringTypes.ToList();
+            //         List<AvereageValueDTO> avereageValues = new List<AvereageValueDTO>();
+
+            //         foreach (var meteringType in meteringTypes)
+            //         {
+                        
+            //             var metering = db.Meterings.Where(m => m.MeteringTypeId == meteringType.Id && m.SensorId == sensor.Id)
+            //                 .OrderByDescending(m => m.Date)
+            //                 .FirstOrDefault();
+            //             if (metering != null)   
+            //             {
+            //                 AvereageValueDTO avereageValueDTO = new AvereageValueDTO()
+            //                 {
+            //                     Value = metering.Value
+            //                 };
+            //                 avereageValues.Add(avereageValueDTO);
+            //             }
+            //         }
+            //         SensorDTO sensorDTO = new SensorDTO()
+            //         {
+            //             Id = sensor.Id,
+            //             Name = sensor.Name,
+            //             AvereageValues = avereageValues
+            //         };
+            //         sensorDTOs.Add(sensorDTO);
+            //     }
             // }
 
-            var userSensors = db.UserSensors.Where(e => e.UserId == userId).ToList();
-            List<Sensors> sensors = new List<Sensors>();
-            foreach (var userSensor in userSensors)
-            {
-                var sensor = db.Sensors.Where(d => d.Id == userSensor.SensorId).FirstOrDefault();
-                if (sensor != null)
-                {
-                    var meteringTypes = db.MeteringTypes.ToList();
-                    List<AvereageValueDTO> avereageValues = new List<AvereageValueDTO>();
+            // var userMeterings = db.Meterings
+            // .Where(m => m.UserId == userId)
+            // .ToList();
 
-                    foreach (var meteringType in meteringTypes)
-                    {
-                        
-                        var metering = db.Meterings.Where(m => m.MeteringTypeId == meteringType.Id && m.SensorId == sensor.Id)
-                            .OrderByDescending(m => m.Date)
-                            .FirstOrDefault();
-                        if (metering != null)   
-                        {
-                            AvereageValueDTO avereageValueDTO = new AvereageValueDTO()
-                            {
-                                Value = metering.Value
-                            };
-                            avereageValues.Add(avereageValueDTO);
-                        }
-                    }
-                    SensorDTO sensorDTO = new SensorDTO()
-                    {
-                        Id = sensor.Id,
-                        Name = sensor.Name,
-                        AvereageValues = avereageValues
-                    };
-                    sensorDTOs.Add(sensorDTO);
-                }
-            }
+            // foreach (var userMetering in userMeterings)
+            // {
+            //     MeteringDTO meteringDTO = new MeteringDTO()
+            //     {
+            //         Id = userMetering.Id,
+            //         SensorId = userMetering.SensorId,
+            //         Date = userMetering.Date,
+            //         Value = userMetering.Value,
+            //         MeteringTypeId = userMetering.MeteringTypeId
+            //         //UserId = userMetering.Id
+            //     };
+            //     meteringDTOs.Add(meteringDTO);
+            // }
+            // mainPageDTO.devices = deviceDTOs;
+            // mainPageDTO.sensors = sensorDTOs;
+            // mainPageDTO.meterings = meteringDTOs;
 
-            var userMeterings = db.Meterings
-            .Where(m => m.UserId == userId)
-            .ToList();
-
-            foreach (var userMetering in userMeterings)
-            {
-                MeteringDTO meteringDTO = new MeteringDTO()
-                {
-                    Id = userMetering.Id,
-                    SensorId = userMetering.SensorId,
-                    Date = userMetering.Date,
-                    Value = userMetering.Value,
-                    MeteringTypeId = userMetering.MeteringTypeId
-                    //UserId = userMetering.Id
-                };
-                meteringDTOs.Add(meteringDTO);
-            }
-            mainPageDTO.devices = deviceDTOs;
-            mainPageDTO.sensors = sensorDTOs;
-            mainPageDTO.meterings = meteringDTOs;
-
-            return Ok(mainPageDTO);
+            return Ok(/*mainPageDTO*/);
         }
 
-        [HttpPost]
-        public IActionResult Index(DeviceDTO dto)
-        {
-            if (dto != null)
-            {
+        // [HttpPost]
+        // public IActionResult Index(DeviceDTO dto)
+        // {
+        //     if (dto != null)
+        //     {
 
-                weatherContext db = new weatherContext();
-                var device = db.Devices.Where(d => d.Id == dto.Id).FirstOrDefault();
+        //         weatherContext db = new weatherContext(Configuration);
+        //         var device = db.Devices.Where(d => d.Id == dto.Id).FirstOrDefault();
 
-                if (device != null)
-                {
-                    device.Status = !device.Status;
-                    db.Devices.Update(device);
-                    db.SaveChanges();
-                }
-                return RedirectToAction("Index");
-            }
-            return RedirectToAction("Index");
-        }
+        //         if (device != null)
+        //         {
+        //             device.Status = !device.Status;
+        //             db.Devices.Update(device);
+        //             db.SaveChanges();
+        //         }
+        //         return RedirectToAction("Index");
+        //     }
+        //     return RedirectToAction("Index");
+        // }
 
         public IActionResult About()
         {
@@ -130,33 +135,7 @@ namespace server.Controllers
             return View();
         }
 
-        public IActionResult GetSeconds()
-        {
-            weatherContext db = new weatherContext();
-            var seconds = db.Seconds.ToList();
-            return View(seconds);
-        }
 
-        public IActionResult GetMinutes() 
-        {
-            weatherContext db = new weatherContext();
-            var minutes = db.Minutes.ToList();
-            return View(minutes);
-        }
-
-        public IActionResult GetHours()
-        {
-            weatherContext db = new weatherContext();
-            var hours = db.Hours.ToList();
-            return View(hours);
-        }
-
-        public IActionResult GetDays()
-        {
-            weatherContext db = new weatherContext();
-            var days = db.Days.ToList();
-            return View(days);
-        }
 
         public IActionResult Privacy()
         {
@@ -169,35 +148,35 @@ namespace server.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<string> SetDeviceStatus(int status)
-        {
-            try
-            {
-                weatherContext _db = new weatherContext();
-                var deviceStatus = _db.DeviceStatus.FirstOrDefault();
-                if (deviceStatus != null)
-                {
-                    if (status == 1)
-                    {
-                        deviceStatus.Fan = true;
-                        await _db.SaveChangesAsync();
-                        return "включить";
-                    }
-                    else
-                    if (status == 0)
-                    {
-                        deviceStatus.Fan = false;
-                        await _db.SaveChangesAsync();
-                        return "выключить";
-                    }
-                }
-                return "Получен невалидный аргумент";
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+        // public async Task<string> SetDeviceStatus(int status)
+        // {
+        //     try
+        //     {
+        //         weatherContext _db = new weatherContext(Configuration);
+        //         var deviceStatus = _db.DeviceStatus.FirstOrDefault();
+        //         if (deviceStatus != null)
+        //         {
+        //             if (status == 1)
+        //             {
+        //                 deviceStatus.Fan = true;
+        //                 await _db.SaveChangesAsync();
+        //                 return "включить";
+        //             }
+        //             else
+        //             if (status == 0)
+        //             {
+        //                 deviceStatus.Fan = false;
+        //                 await _db.SaveChangesAsync();
+        //                 return "выключить";
+        //             }
+        //         }
+        //         return "Получен невалидный аргумент";
+        //     }
+        //     catch (System.Exception)
+        //     {
+        //         throw;
+        //     }
 
-        }
+        // }
     }
 }
