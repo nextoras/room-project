@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace server
 {
-    public partial class MeteringDTO
+    public partial class MeteringsDTO
     {
         public int Id { get; set; }
         public int SensorId { get; set; }

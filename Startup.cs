@@ -8,11 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using server.Enteties;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using server.JWT;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace server
 {
@@ -29,29 +28,52 @@ namespace server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            // укзывает, будет ли валидироваться издатель при валидации токена
+                            ValidateIssuer = true,
+                            // строка, представляющая издателя
+                            ValidIssuer = AuthTokenOptions.ISSUER,
+
+                            // будет ли валидироваться потребитель токена
+                            ValidateAudience = false,
+                            // установка потребителя токена
+                            //ValidAudience = AuthTokenOptions.AUDIENCE,
+                            // будет ли валидироваться время существования
+                            ValidateLifetime = true,
+
+                            // установка ключа безопасности
+                            IssuerSigningKey = AuthTokenOptions.GetSymmetricSecurityKey(),
+                            // валидация ключа безопасности
+                            ValidateIssuerSigningKey = true
+                        };
+                    });
+                    
             services.AddCors(options =>
-        {
-            options.AddPolicy(name: MyAllowSpecificOrigins,
-                              builder =>
-                              {
-                                  builder.WithOrigins("http://localhost:51114",
-                                                      "http://localhost:4200");
-                              });
-
-            services.AddIdentity<Users, IdentityRole>()
-                .AddEntityFrameworkStores<weatherContext>();
-        });
-
-            services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.AddDefaultPolicy(
+                    builder => 
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    }
+                );
             });
+            services.AddIdentity<Users, IdentityRole>()
+                    .AddEntityFrameworkStores<weatherContext>();
+
+            
+            
             services.AddDbContext<weatherContext>(options =>
                         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,20 +88,17 @@ namespace server
                 app.UseExceptionHandler("/Home/Error");
                 //app.UseHsts();
             }
-    
-            
-            app.UseStaticFiles();
 
+
+            app.UseStaticFiles();
             app.UseRouting();
+            app.UseCors();
+
             app.UseAuthentication();    // подключение аутентификации
             app.UseAuthorization();
-            
-            app.UseCors(MyAllowSpecificOrigins);
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -5,18 +5,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using server.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace server.Controllers
 {
     public class HomeController : Controller
     {
         public IConfiguration Configuration { get; }
-        public HomeController(IConfiguration configuration)
+        public weatherContext _wc { get; set; }
+        public HomeController(IConfiguration configuration, weatherContext weatherContext)
         {
             Configuration = configuration;
+            _wc = weatherContext;
         }
+        [Authorize]
         public IActionResult Index()
         {
+            return Ok();
+        }
+        // public IActionResult Index()
+        // {
             // weatherContext db = new weatherContext(Configuration);
             // var userId = "asd";
 
@@ -98,8 +106,8 @@ namespace server.Controllers
             // mainPageDTO.sensors = sensorDTOs;
             // mainPageDTO.meterings = meteringDTOs;
 
-            return Ok(/*mainPageDTO*/);
-        }
+        //     return Ok(/*mainPageDTO*/);
+        // }
 
         // [HttpPost]
         // public IActionResult Index(DeviceDTO dto)
@@ -128,6 +136,7 @@ namespace server.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Разработчик всегда на связи!";
@@ -148,35 +157,34 @@ namespace server.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // public async Task<string> SetDeviceStatus(int status)
-        // {
-        //     try
-        //     {
-        //         weatherContext _db = new weatherContext(Configuration);
-        //         var deviceStatus = _db.DeviceStatus.FirstOrDefault();
-        //         if (deviceStatus != null)
-        //         {
-        //             if (status == 1)
-        //             {
-        //                 deviceStatus.Fan = true;
-        //                 await _db.SaveChangesAsync();
-        //                 return "включить";
-        //             }
-        //             else
-        //             if (status == 0)
-        //             {
-        //                 deviceStatus.Fan = false;
-        //                 await _db.SaveChangesAsync();
-        //                 return "выключить";
-        //             }
-        //         }
-        //         return "Получен невалидный аргумент";
-        //     }
-        //     catch (System.Exception)
-        //     {
-        //         throw;
-        //     }
+        public async Task<string> SetDeviceStatus(int status)
+        {
+            try
+            {
+                var deviceStatus = _wc.Devices.FirstOrDefault();
+                if (deviceStatus != null)
+                {
+                    // if (status == 1)
+                    // {
+                    //     deviceStatus.Fan = true;
+                    //     await _db.SaveChangesAsync();
+                    //     return "включить";
+                    // }
+                    // else
+                    // if (status == 0)
+                    // {
+                    //     deviceStatus.Fan = false;
+                    //     await _db.SaveChangesAsync();
+                    //     return "выключить";
+                    // }
+                }
+                return "Получен невалидный аргумент";
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
 
-        // }
+        }
     }
 }

@@ -8,36 +8,36 @@ using Microsoft.Extensions.Configuration;
 
 namespace server.Controllers
 {
-    public class DeviceController : Controller
+    public class SensorController : Controller
     {
         public IConfiguration Configuration { get; }
         public weatherContext _wc { get; set; }
-        public DeviceController(IConfiguration configuration, weatherContext weatherContext)
+        public SensorController(IConfiguration configuration, weatherContext weatherContext)
         {
             Configuration = configuration;
             _wc = weatherContext;
         }
 
         [HttpGet]
-        public IEnumerable<Devices> GetDevices()
+        public IEnumerable<Sensors> GetSensors()
         {
-            return _wc.Devices.ToList().OrderBy(x => x.Id);
+            return _wc.Sensors.ToList();
         }
         
         [HttpPost]
-        public async Task ChangeStatus(long id)
+        public async Task<string> SetDeviceStatus(long id, bool status)
         {
             try
             {
-                var device = _wc.Devices.Where(x => x.Id == id).FirstOrDefault();
+                var deviceStatus = _wc.Devices.Where(x => x.Id == id).FirstOrDefault();
                 
-                if (device != null)
-                {
-                    device.Status = !device.Status;
-                    _wc.Devices.Update(device);
+                deviceStatus.Status = status;
 
-                    await _wc.SaveChangesAsync();
-                }
+                _wc.Devices.Update(deviceStatus);
+
+                await _wc.SaveChangesAsync();
+
+                return "Получен невалидный аргумент";
             }
             catch (System.Exception)
             {
