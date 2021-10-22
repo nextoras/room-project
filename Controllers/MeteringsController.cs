@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,13 +15,14 @@ namespace server.Controllers
     {
         public IConfiguration Configuration { get; }
         public weatherContext _wc { get; set; }
+
         public MeteringController(IConfiguration configuration, weatherContext weatherContext)
         {
             Configuration = configuration;
             _wc = weatherContext;
         }
-        
-        [Authorize(AuthenticationSchemes = "Bearer")]
+
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         public ActionResult<MeteringDTO> GetMeterings()
         {
@@ -35,7 +37,8 @@ namespace server.Controllers
                 sensorDataDTO.SensorId = sensor.Id;
                 sensorDataDTO.SensorName = sensor.Name;
 
-                var meterings = _wc.Meterings.Where(x => x.SensorId == sensor.Id);
+                var meterings = _wc.Meterings.Where(x => x.SensorId == sensor.Id).OrderByDescending(x => x.Date)
+                    .Take(60);
 
                 if (meterings != null)
                 {
@@ -49,6 +52,7 @@ namespace server.Controllers
                     meteringDTO.meterings.Add(sensorDataDTO);
                 }
             }
+
             return Ok(meteringDTO);
         }
 
@@ -89,9 +93,37 @@ namespace server.Controllers
             {
                 throw;
             }
-
         }
 
+        [HttpGet("/CreateData/{t}/{h}")]
+        public async Task<String> CreateData(double t, double h)
+        {
+            var row_id = _wc.Meterings
+                .ToList().Count() + 1;
 
+
+            Meterings metering1 = new Meterings()
+            {
+                Id = row_id,
+                SensorId = 0,
+                Date = DateTime.UtcNow,
+                Value = t,
+                MeteringTypeId = 0
+            };
+
+            Meterings metering2 = new Meterings()
+            {
+                Id = row_id + 1,
+                SensorId = 1,
+                Date = DateTime.UtcNow,
+                Value = h,
+                MeteringTypeId = 0
+            };
+
+            _wc.Meterings.Add(metering1);
+            _wc.Meterings.Add(metering2);
+            _wc.SaveChanges();
+            return "sc";
+        }
     }
 }

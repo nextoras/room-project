@@ -12,6 +12,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using server.JWT;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Logging;
+using server.BackgroundJobs;
+using server.Interfaces;
+using server.Services;
 
 namespace server
 {
@@ -67,7 +71,8 @@ namespace server
             services.AddIdentity<Users, IdentityRole>()
                     .AddEntityFrameworkStores<weatherContext>();
 
-            
+            services.AddHostedService<TimedHostedService>();
+            services.AddScoped<IBackgroundJobInterface, BackgroundJobService>();
             
             services.AddDbContext<weatherContext>(options =>
                         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
