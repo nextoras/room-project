@@ -42,12 +42,14 @@ namespace server.Controllers
 
                 if (meterings != null)
                 {
-                    var meteringTypes = _wc.MeteringTypes.ToList();
+                    
 
                     sensorDataDTO.minute = MapMeterings(meterings, 0);
                     sensorDataDTO.hour = MapMeterings(meterings, 1);
                     sensorDataDTO.day = MapMeterings(meterings, 2);
                     sensorDataDTO.week = MapMeterings(meterings, 3);
+
+                    sensorDataDTO.LatestMetering = sensorDataDTO.minute.Any() ? sensorDataDTO.minute.FirstOrDefault().Value : sensorDataDTO.hour.FirstOrDefault().Value;
 
                     meteringDTO.meterings.Add(sensorDataDTO);
                 }
@@ -98,9 +100,9 @@ namespace server.Controllers
         [HttpGet("/CreateData/{t}/{h}")]
         public async Task<String> CreateData(double t, double h)
         {
-            var row_id = _wc.Meterings
-                .ToList().Count() + 1;
+            var row_id = _wc.Meterings.Select(x => x.Id).OrderByDescending(x => x).FirstOrDefault() + 1;
 
+            //if (row_id == null) throw new ArgumentNullException();
 
             Meterings metering1 = new Meterings()
             {

@@ -16,13 +16,8 @@ namespace server.BackgroundJobs
         private readonly ILogger<TimedHostedService> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public class IdValues
-        {
-            public long Id { get; set;}
-            public double Value { get; set; }
-        }
-
         private Timer _timer;
+        private Timer _timer1;
         public IServiceProvider Services { get; }
         private readonly IServiceScope _scope;
 
@@ -38,9 +33,9 @@ namespace server.BackgroundJobs
         public Task StartAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Timed Hosted Service running.");
-
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(60));
+     
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
+            _timer1 = new Timer(DoWork1, null, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3600));
 
             return Task.CompletedTask;
         }
@@ -62,19 +57,74 @@ namespace server.BackgroundJobs
                             .Where(x => x.SensorId == sensorId && x.MeteringTypeId == 0)
                             .ToList();
 
-                        var averageValue = dbContext.Meterings.Where(x => x.SensorId == sensorId && x.MeteringTypeId == 0)
+                        if (obsoleteRecords.Count > 0)
+                        {
+                            var averageValue = obsoleteRecords
                             .Select(x => x.Value).Average();
 
-                        dbContext.Meterings.Add(new Meterings()
+                            dbContext.Meterings.Add(new Meterings()
+                                {
+                                    SensorId = sensorId,
+                                    MeteringTypeId = 1,
+                                    Value = averageValue,
+                                    Date = DateTime.UtcNow
+                                });
+
+                        dbContext.RemoveRange(obsoleteRecords);
+                        }
+
+                        _logger.LogInformation("Minute records are cleared " +
+                            "sensorId " + sensorId + 
+                            " obsolete records count: " + obsoleteRecords.Count + '\n');
+                    }
+
+                    dbContext.SaveChanges();
+
+                    Console.WriteLine("Online tagger Service is Running");
+                }
+
+            }
+
+            _logger.LogInformation(
+                "Timed Hosted Service is working. Count: {Count}");
+        }
+
+        private void DoWork1(object state)
+        {
+
+            _logger.LogInformation("Timed Hosted Service is running");
+
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                using (var dbContext = scope.ServiceProvider.GetRequiredService<weatherContext>())
+                {
+                    var sensorIds = dbContext.Sensors.Select(x => x.Id).ToList();
+
+                    foreach (var sensorId in sensorIds)
+                    {
+                        var obsoleteRecords = dbContext.Meterings
+                            .Where(x => x.SensorId == sensorId && x.MeteringTypeId == 1)
+                            .ToList();
+
+                        if (obsoleteRecords.Count > 0)
+                        {
+                            var averageValue = obsoleteRecords
+                            .Select(x => x.Value).Average();
+
+                            dbContext.Meterings.Add(new Meterings()
                             {
                                 SensorId = sensorId,
-                                MeteringTypeId = 1,
+                                MeteringTypeId = 2,
                                 Value = averageValue,
                                 Date = DateTime.UtcNow
                             });
 
-                        dbContext.RemoveRange(obsoleteRecords);
-                        
+                            dbContext.RemoveRange(obsoleteRecords);
+                        }
+
+                        _logger.LogInformation("Minute records are cleared " +
+                            "sensorId " + sensorId +
+                            " obsolete records count: " + obsoleteRecords.Count + '\n');
                     }
 
                     dbContext.SaveChanges();

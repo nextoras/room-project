@@ -13,6 +13,7 @@ namespace server.DTO
     {
         public int SensorId { get; set; }
         public string SensorName { get; set; }
+        public double LatestMetering { get; set;}
         public List<DataDTO> minute { get; set; }
         public List<DataDTO> hour { get; set; }
         public List<DataDTO> day { get; set; }
