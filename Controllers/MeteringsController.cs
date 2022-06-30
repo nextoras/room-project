@@ -37,8 +37,7 @@ namespace server.Controllers
                 sensorDataDTO.SensorId = sensor.Id;
                 sensorDataDTO.SensorName = sensor.Name;
 
-                var meterings = _wc.Meterings.Where(x => x.SensorId == sensor.Id).OrderByDescending(x => x.Date)
-                    .Take(60);
+                var meterings = _wc.Meterings.Where(x => x.SensorId == sensor.Id).OrderBy(x => x.Date);
 
                 if (meterings != null)
                 {
@@ -49,7 +48,7 @@ namespace server.Controllers
                     sensorDataDTO.day = MapMeterings(meterings, 2);
                     sensorDataDTO.week = MapMeterings(meterings, 3);
 
-                    sensorDataDTO.LatestMetering = sensorDataDTO.minute.Any() ? sensorDataDTO.minute.FirstOrDefault().Value : sensorDataDTO.hour.FirstOrDefault().Value;
+                    sensorDataDTO.LatestMetering = sensorDataDTO.minute.Any() ? sensorDataDTO.minute.FirstOrDefault().Value : 0;
 
                     meteringDTO.meterings.Add(sensorDataDTO);
                 }
@@ -61,13 +60,21 @@ namespace server.Controllers
         private List<DataDTO> MapMeterings(IQueryable<Meterings> meterings, int meteringType)
         {
             List<DataDTO> dataDTOs = new List<DataDTO>();
-            var dateMeterings = meterings.Where(x => x.MeteringTypeId == meteringType);
-
+            var dateMeterings = meterings.Where(x => x.MeteringTypeId == ((int)meteringType));
+             
             foreach (var item in dateMeterings)
             {
                 DataDTO dataDTO = new DataDTO();
                 dataDTO.Date = item.Date;
-                dataDTO.MeteringTypeId = meteringType;
+                dataDTO.DateString = dataDTO.Date.Minute.ToString();
+                dataDTO.DateString = meteringType switch
+                {
+                    0 => dataDTO.Date.Minute.ToString(),
+                    1 => dataDTO.Date.Hour.ToString(),
+                    2 => dataDTO.Date.Day.ToString(),
+                    3 => dataDTO.Date.Month.ToString()
+                };
+                dataDTO.MeteringTypeId = ((int)meteringType);
                 dataDTO.Value = item.Value;
 
                 dataDTOs.Add(dataDTO);
@@ -97,7 +104,7 @@ namespace server.Controllers
             }
         }
 
-        [HttpGet("/CreateData/{t}/{h}")]
+        [HttpGet("api/CreateData/{t}/{h}")]
         public async Task<String> CreateData(double t, double h)
         {
             var row_id = _wc.Meterings.Select(x => x.Id).OrderByDescending(x => x).FirstOrDefault() + 1;

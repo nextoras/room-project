@@ -56,11 +56,10 @@ namespace server.Controllers
 
                         var encodedJwt = GenerateEncodedJwt(user, now, "user");
 
-                        // await AuthenticateUser(model.Email); // аутентификация
+                        await AuthenticateUser(model.Email, model.Password); // аутентификация
 
                         return Ok(new { access_token = encodedJwt });
                     }
-
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 return BadRequest(ModelState);

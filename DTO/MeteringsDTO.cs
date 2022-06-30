@@ -22,6 +22,7 @@ namespace server.DTO
     public class DataDTO
     {
         public DateTime Date { get; set; }
+        public string DateString {get; set; }
         public double Value { get; set; }
         public int MeteringTypeId { get; set; }
     }

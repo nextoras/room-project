@@ -14,16 +14,6 @@ namespace server
     {
         public static void Main(string[] args)
         {
-            //weatherContext db = new weatherContext();
-            try
-            {
-                
-            }
-            catch (System.Exception)
-            {
-                
-                throw;
-            }
             CreateWebHostBuilder(args).Build().Run();
         }
 

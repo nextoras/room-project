@@ -28,10 +28,6 @@ namespace server
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // if (!optionsBuilder.IsConfigured)
-            // {
-            //     optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-            // }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

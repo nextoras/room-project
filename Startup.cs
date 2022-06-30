@@ -106,7 +106,7 @@ namespace server
             {
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "api/{controller=Home}/{action=Index}/{id?}");
             });
 
         }
