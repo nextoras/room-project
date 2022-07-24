@@ -8,6 +8,7 @@ using server.Models;
 using Microsoft.Extensions.Configuration;
 using server.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace server.Controllers
 {
@@ -15,11 +16,12 @@ namespace server.Controllers
     {
         public IConfiguration Configuration { get; }
         public weatherContext _wc { get; set; }
-
-        public MeteringController(IConfiguration configuration, weatherContext weatherContext)
+        private readonly ILogger<MeteringController> _logger;
+        public MeteringController(IConfiguration configuration, weatherContext weatherContext, ILogger<MeteringController> logger)
         {
             Configuration = configuration;
             _wc = weatherContext;
+            _logger = logger;
         }
 
         //[Authorize(AuthenticationSchemes = "Bearer")]
