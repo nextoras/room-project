@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using server.Interfaces;
 
 namespace server.BackgroundJobs
 {
@@ -15,13 +14,9 @@ namespace server.BackgroundJobs
     {
         private readonly ILogger<TimedHostedService> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
-
-        private Timer _timer;
-        private Timer _timer1;
-        private Timer _timer2;
+        private Timer _timerInitial;
         public IServiceProvider Services { get; }
         private readonly IServiceScope _scope;
-
 
         public TimedHostedService(ILogger<TimedHostedService> logger, IServiceProvider services, IServiceScopeFactory scopeFactory)
         {
@@ -34,18 +29,35 @@ namespace server.BackgroundJobs
         public Task StartAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Timed Hosted Service running.");
-     
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
-            _timer1 = new Timer(DoWork1, null, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3600));
-            _timer2 = new Timer(DoWork2, null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(3600*24));
+
+            _timerInitial = new Timer(DoWorkInitial, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
 
             return Task.CompletedTask;
+        }
+        private async void DoWorkInitial(object state)
+        {
+            try
+            {
+                using (var scope = _scopeFactory.CreateScope())
+                {
+                    var DateTimeNow = DateTime.Now;
+                    _logger.LogDebug(DateTimeNow.ToString());
+                    
+                    if (DateTimeNow.Second == 0) DoWork(null);
+                    if (DateTimeNow.Minute == 0 && DateTimeNow.Second == 0) DoWork1(null);
+                    if (DateTimeNow.Hour == 0 && DateTimeNow.Minute == 0 && DateTimeNow.Second == 0) DoWork2(null);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical("CRON BROKEN due to  ", ex.ToString());
+            }
         }
 
         private void DoWork(object state)
         {
 
-            _logger.LogInformation("Timed Hosted Service is running");
+            _logger.LogInformation("Timed Hosted Service1 is running");
 
             using (var scope = _scopeFactory.CreateScope())
             {
@@ -59,7 +71,7 @@ namespace server.BackgroundJobs
                             .Where(x => x.SensorId == sensorId && x.MeteringTypeId == 0)
                             .ToList();
 
-                        if (obsoleteRecords.Count > 0)
+                        if (obsoleteRecords.Any())
                         {
                             var averageValue = obsoleteRecords
                             .Select(x => x.Value).Average();
@@ -81,20 +93,14 @@ namespace server.BackgroundJobs
                     }
 
                     dbContext.SaveChanges();
-
-                    Console.WriteLine("Online tagger Service is Running");
                 }
-
             }
-
-            _logger.LogInformation(
-                "Timed Hosted Service is working. Count: {Count}");
         }
 
         private void DoWork1(object state)
         {
 
-            _logger.LogInformation("Timed Hosted Service is running");
+            _logger.LogInformation("Timed Hosted Service2 is running");
 
             using (var scope = _scopeFactory.CreateScope())
             {
@@ -108,7 +114,7 @@ namespace server.BackgroundJobs
                             .Where(x => x.SensorId == sensorId && x.MeteringTypeId == 1)
                             .ToList();
 
-                        if (obsoleteRecords.Count > 0)
+                        if (obsoleteRecords.Any())
                         {
                             var averageValue = obsoleteRecords
                             .Select(x => x.Value).Average();
@@ -130,20 +136,14 @@ namespace server.BackgroundJobs
                     }
 
                     dbContext.SaveChanges();
-
-                    Console.WriteLine("Online tagger Service is Running");
                 }
-
             }
-
-            _logger.LogInformation(
-                "Timed Hosted Service is working. Count: {Count}");
         }
 
         private void DoWork2(object state)
         {
 
-            _logger.LogInformation("Timed Hosted Service is running");
+            _logger.LogInformation("Timed Hosted Service3 is running");
 
             using (var scope = _scopeFactory.CreateScope())
             {
@@ -157,7 +157,7 @@ namespace server.BackgroundJobs
                             .Where(x => x.SensorId == sensorId && x.MeteringTypeId == 2)
                             .ToList();
 
-                        if (obsoleteRecords.Count > 0)
+                        if (obsoleteRecords.Any())
                         {
                             var averageValue = obsoleteRecords
                             .Select(x => x.Value).Average();
@@ -179,28 +179,23 @@ namespace server.BackgroundJobs
                     }
 
                     dbContext.SaveChanges();
-
-                    Console.WriteLine("Online tagger Service is Running");
                 }
 
             }
-
-            _logger.LogInformation(
-                "Timed Hosted Service is working. Count: {Count}");
         }
 
         public Task StopAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Timed Hosted Service is stopping.");
 
-            _timer?.Change(Timeout.Infinite, 0);
+            _timerInitial?.Change(Timeout.Infinite, 0);
 
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            _timer?.Dispose();
+            _timerInitial?.Dispose();
         }
     }
 }
