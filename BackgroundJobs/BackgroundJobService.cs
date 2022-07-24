@@ -35,9 +35,9 @@ namespace server.BackgroundJobs
         {
             _logger.LogInformation("Timed Hosted Service running.");
      
-            //_timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
-            //_timer1 = new Timer(DoWork1, null, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3600));
-            //_timer2 = new Timer(DoWork2, null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(3600*24));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
+            _timer1 = new Timer(DoWork1, null, TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3600));
+            _timer2 = new Timer(DoWork2, null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(3600*24));
 
             return Task.CompletedTask;
         }
