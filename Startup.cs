@@ -86,7 +86,7 @@ namespace server
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             var path = Directory.GetCurrentDirectory();
-            loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
+            loggerFactory.AddFile($"{path}/Log.txt");
 
             if (env.IsDevelopment())
             {
