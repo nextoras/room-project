@@ -46,7 +46,7 @@ namespace server.Controllers
                     sensorDataDTO.minute = MapMeterings(meterings, 0);
                     sensorDataDTO.hour = MapMeterings(meterings, 1);
                     sensorDataDTO.day = MapMeterings(meterings, 2);
-                    sensorDataDTO.week = MapMeterings(meterings, 3);
+                    sensorDataDTO.month = MapMeterings(meterings, 3);
 
                     sensorDataDTO.LatestMetering = sensorDataDTO.minute.Any() ? sensorDataDTO.minute.FirstOrDefault().Value : 0;
 
@@ -69,10 +69,10 @@ namespace server.Controllers
                 dataDTO.DateString = dataDTO.Date.Minute.ToString();
                 dataDTO.DateString = meteringType switch
                 {
-                    0 => dataDTO.Date.Minute.ToString(),
-                    1 => dataDTO.Date.Hour.ToString(),
-                    2 => dataDTO.Date.Day.ToString(),
-                    3 => dataDTO.Date.Month.ToString()
+                    0 => dataDTO.Date.ToString("H:mm:ss"),
+                    1 => dataDTO.Date.ToString("H:mm"),
+                    2 => dataDTO.Date.ToString("dd:hh:mm"),
+                    3 => dataDTO.Date.ToString("dd:MMMM")
                 };
                 dataDTO.MeteringTypeId = ((int)meteringType);
                 dataDTO.Value = item.Value;

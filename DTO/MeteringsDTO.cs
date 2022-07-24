@@ -17,7 +17,7 @@ namespace server.DTO
         public List<DataDTO> minute { get; set; }
         public List<DataDTO> hour { get; set; }
         public List<DataDTO> day { get; set; }
-        public List<DataDTO> week { get; set; }
+        public List<DataDTO> month { get; set; }
     }
     public class DataDTO
     {
