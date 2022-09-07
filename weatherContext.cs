@@ -21,6 +21,9 @@ namespace server
         public virtual DbSet<Meterings> Meterings { get; set; }
         public virtual DbSet<MeteringTypes> MeteringTypes { get; set; }
         public virtual DbSet<Sensors> Sensors { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OzonProductStock> OzonProductStock { get; set; }
+        
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserSensors> UserSensors { get; set; }
         public virtual DbSet<UserDevices> UserDevices { get; set; }

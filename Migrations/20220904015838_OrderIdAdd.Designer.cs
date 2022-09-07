@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using server;
@@ -9,9 +10,10 @@ using server;
 namespace server.Migrations
 {
     [DbContext(typeof(weatherContext))]
-    partial class weatherContextModelSnapshot : ModelSnapshot
+    [Migration("20220904015838_OrderIdAdd")]
+    partial class OrderIdAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -401,30 +403,6 @@ namespace server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("server.OzonProductStock", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("DateEnded")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("DateIncome")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ProductId");
-
-                    b.ToTable("OzonProductStock");
                 });
 
             modelBuilder.Entity("server.Sensors", b =>

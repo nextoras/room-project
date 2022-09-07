@@ -8,7 +8,7 @@ namespace server
     public partial class Meterings
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int SensorId { get; set; }
         [ForeignKey("SensorId")]
         public virtual Sensors Sensor { get; set; }

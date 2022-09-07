@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using server.Interfaces;
+using System;
 
 namespace server.Services
 {
@@ -11,7 +12,7 @@ namespace server.Services
         private readonly ILogger<BackgroundJobService> _logger;
         protected class MeteringUpdate
         {
-            public int Id;
+            public Guid Id;
             public double Value;
         }
 
