@@ -109,13 +109,13 @@ namespace server.Controllers
         [HttpGet("api/CreateData/{t}/{h}")]
         public async Task<String> CreateData(double t, double h)
         {
-            var row_id = _wc.Meterings.Select(x => x.Id).OrderByDescending(x => x).FirstOrDefault() + 1;
+            //var row_id = _wc.Meterings.Select(x => x.Id).OrderByDescending(x => x).FirstOrDefault() + 1;
 
             //if (row_id == null) throw new ArgumentNullException();
 
             Meterings metering1 = new Meterings()
             {
-                Id = row_id,
+                //Id = row_id,
                 SensorId = 0,
                 Date = DateTime.UtcNow,
                 Value = t,
@@ -124,7 +124,7 @@ namespace server.Controllers
 
             Meterings metering2 = new Meterings()
             {
-                Id = row_id + 1,
+                //Id = row_id + 1,
                 SensorId = 1,
                 Date = DateTime.UtcNow,
                 Value = h,

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using server;
@@ -9,9 +10,10 @@ using server;
 namespace server.Migrations
 {
     [DbContext(typeof(weatherContext))]
-    partial class weatherContextModelSnapshot : ModelSnapshot
+    [Migration("20220805130752_ChangeKeyTypeNumericToGuidMeteringsTable")]
+    partial class ChangeKeyTypeNumericToGuidMeteringsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -363,68 +365,6 @@ namespace server.Migrations
                     b.HasIndex("SensorId");
 
                     b.ToTable("Meterings");
-                });
-
-            modelBuilder.Entity("server.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Region")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Sku")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<string>("WarehouseName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("server.OzonProductStock", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("DateEnded")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("DateIncome")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ProductId");
-
-                    b.ToTable("OzonProductStock");
                 });
 
             modelBuilder.Entity("server.Sensors", b =>
